@@ -1,0 +1,40 @@
+<div class="author-edit">
+    <h1>{{title}}</h1>
+    @if (id && !author) {
+      <p><em>Loading...</em></p>
+    }
+    
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  
+      <!-- Name -->
+      <mat-form-field>
+        <mat-label>Name:</mat-label>
+        <input matInput formControlName="name" required
+               placeholder="Type a name">
+        @for (error of getErrors(form.get('name')!, 'Name'); track error) {
+          <mat-error>{{error}}</mat-error>
+        }
+      </mat-form-field>
+  
+      <!-- Background -->
+      <mat-form-field>
+        <mat-label>Background:</mat-label>
+        <input matInput formControlName="background" required
+               placeholder="Type in author background">
+        @for (error of getErrors(form.get('background')!, 'Background'); track error) {
+          <mat-error>{{error}}</mat-error>
+        }
+      </mat-form-field>
+
+      <div>
+        <button mat-flat-button color="primary"
+                type="submit" [disabled]="!form.valid">
+          {{ id ? "Save" : "Create" }}
+        </button>
+        <button mat-flat-button color="secondary"
+                [routerLink]="['/authors']">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>

@@ -1,0 +1,54 @@
+<h1>Categories</h1>
+
+@if (!categories) {
+    <p><em>Loading...</em></p>
+}
+
+<button mat-flat-button color="primary"
+    class="btn-add" [routerLink]="['/category']">
+    Add a new Category
+</button>
+
+<mat-form-field [hidden]="!categories">
+    <input matInput #filter (keyup)="onFilterTextChanged(filter.value)"
+        placeholder="Filter by categories by category...">
+</mat-form-field>
+
+<table mat-table [dataSource]="categories"
+    class="mat-elevation-z8"
+    [hidden]="!categories"
+    matSort (matSortChange)="loadData()"
+    [matSortActive]="defaultSortColumn"
+    [matSortDirection]="defaultSortOrder">
+    
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let category">{{category.id}}</td>
+    </ng-container>
+    
+    <!-- Category Column -->
+    <ng-container matColumnDef="label">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let category">
+            <a [routerLink]="['/category', category.id]">{{category.label}}</a>
+        </td>
+    </ng-container>
+
+    <!-- Total Books Column -->
+    <ng-container matColumnDef="totalBooks">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Number of Books</th>
+        <td mat-cell *matCellDef="let category">{{category.totalBooks}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<!-- Pagination directive -->
+<mat-paginator [hidden]="!categories"
+    (page)="getData($event)"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons>
+</mat-paginator>

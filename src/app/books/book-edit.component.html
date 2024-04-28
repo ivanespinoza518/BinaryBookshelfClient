@@ -1,0 +1,132 @@
+<div class="book-edit">
+    <h1>{{viewTitle}}</h1>
+    @if (id && !book) {
+        <p><em>Loading...</em></p>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <p>
+            @if (form.invalid && form.hasError('isDupeBook')) {
+                <mat-error>
+                    <strong>ERROR</strong>:
+                    A book with the same <i>title</i>, <i>subtitle</i>,
+                    <i>edition</i>, <i>ISBN-13</i>, <i>author</i>, and 
+                    <i>category</i> already exists.
+                </mat-error>
+            }
+        </p>
+
+        <!-- Title -->
+        <mat-form-field>
+            <mat-label>Title:</mat-label>
+            <input matInput formControlName="title" required
+                placeholder="Enter a title">
+            @for (error of getErrors(form.get('title')!, 'Title'); track error) {
+                <mat-error>{{error}}</mat-error>
+            }
+        </mat-form-field>
+        
+        <!-- Subtitle -->
+        <mat-form-field>
+            <mat-label>Subtitle:</mat-label>
+            <input matInput formControlName="subtitle"
+                placeholder="Enter a subtitle">
+        </mat-form-field>
+        
+        <!-- Description -->
+        <mat-form-field>
+            <mat-label>Description:</mat-label>
+            <input matInput formControlName="description" required
+                placeholder="Type a description">
+            @for (error of getErrors(form.get('description')!, 'Description'); track error) {
+                <mat-error>{{error}}</mat-error>
+            }
+        </mat-form-field>
+        
+        <!-- Edition -->
+        <mat-form-field>
+            <mat-label>Edition:</mat-label>
+            <input matInput formControlName="edition" required
+                placeholder="Enter an edition">
+            @for (error of getErrors(form.get('edition')!, 'Edition',
+                { 'pattern' : 'must be a positive number.'}); track error) {
+                <mat-error>{{error}}</mat-error>
+            }
+        </mat-form-field>
+
+        <!-- ISBN-13 -->
+        <mat-form-field>
+            <mat-label>ISBN-13:</mat-label>
+            <input matInput formControlName="isbn13" required
+                placeholder="Enter an ISBN-13">
+            @for (error of getErrors(form.get('isbn13')!, 'ISBN-13',
+                { 'pattern' : 'is invalid.'}); track error) {
+                <mat-error>{{error}}</mat-error>
+            }
+        </mat-form-field>
+        
+        <!-- Image Url -->
+        <mat-form-field>
+            <mat-label>Image:</mat-label>
+            <input matInput formControlName="imageUrl" required
+                placeholder="Insert an image">
+            @for (error of getErrors(form.get('imageUrl')!, 'Image'); track error) {
+                <mat-error>{{error}}</mat-error>
+            }
+        </mat-form-field>
+        
+        <!-- Price -->
+        <mat-form-field>
+            <mat-label>Price:</mat-label>
+            <input matInput formControlName="price" required
+                placeholder="Enter a price">
+            @for (error of getErrors(form.get('price')!, 'Price', 
+                { 'pattern' : 'requires a dollar and/or cent amount.'}); track error) {
+                <mat-error>{{error}}</mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Author -->
+        @if (authors) {
+            <mat-form-field>
+                <mat-label>Select an Author...</mat-label>
+                <mat-select id="authorId" formControlName="authorId">
+                    @for (author of authors; track author.id) {
+                        <mat-option [value]="author.id">{{author.name}}</mat-option>
+                    }
+                </mat-select>
+                @for (error of getErrors(form.get('authorId')!, 'Author'); track error) {
+                    <mat-error>{{error}}</mat-error>
+                }
+            </mat-form-field>
+        }
+
+        <!-- Category -->
+        @if (categories) {
+            <mat-form-field>
+                <mat-label>Select a Category...</mat-label>
+                <mat-select id="categoryId" formControlName="categoryId">
+                    @for (category of categories; track category.id) {
+                        <mat-option [value]="category.id">{{category.label}}</mat-option>
+                    }
+                </mat-select>
+                @for (error of getErrors(form.get('categoryId')!, 'Category'); track error) {
+                    <mat-error>{{error}}</mat-error>
+                }
+            </mat-form-field>
+        }
+
+        <div>
+            <button mat-flat-button color="primary"
+                type="submit"
+                [disabled]="!form.valid">
+                {{ this.id ? "Save" : "Create" }}
+            </button>
+            <button mat-flat-button color="secondary"
+                [routerLink]="['/books']">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>
