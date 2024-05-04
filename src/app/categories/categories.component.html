@@ -4,10 +4,12 @@
     <p><em>Loading...</em></p>
 }
 
-<button mat-flat-button color="primary"
-    class="btn-add" [routerLink]="['/category']">
-    Add a new Category
-</button>
+@if (categories && authService.isAuthenticated()) {
+    <button mat-flat-button color="primary"
+        class="btn-add" [routerLink]="['/category']">
+        Add a new Category
+    </button>
+}
 
 <mat-form-field [hidden]="!categories">
     <input matInput #filter (keyup)="onFilterTextChanged(filter.value)"

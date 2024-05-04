@@ -11,6 +11,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { Category } from './category';
 import { CategoryService } from './category.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-categories',
@@ -44,7 +45,9 @@ export class CategoriesComponent implements OnInit {
 
   filterTextChanged: Subject<string> = new Subject<string>();
 
-  constructor(private categoryService: CategoryService) {
+  constructor(
+    protected authService: AuthService,
+    private categoryService: CategoryService) {
   }
 
   ngOnInit() {
@@ -64,7 +67,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   loadData(query?: string) {
-    var pageEvent = new PageEvent();
+    let pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
     this.filterQuery = query;
@@ -72,19 +75,19 @@ export class CategoriesComponent implements OnInit {
   }
 
   getData(event: PageEvent) {
-    var sortColumn = (this.sort)
+    const sortColumn = (this.sort)
       ? this.sort.active
       : this.defaultSortColumn;
 
-    var sortOrder = (this.sort)
+    const sortOrder = (this.sort)
       ? this.sort.direction
       : this.defaultSortOrder;
 
-    var filterColumn = (this.filterQuery)
+    const filterColumn = (this.filterQuery)
       ? this.defaultFilterColumn
       : null;
 
-    var filterQuery = (this.filterQuery)
+    const filterQuery = (this.filterQuery)
       ? this.filterQuery
       : null;
 

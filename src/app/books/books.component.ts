@@ -12,6 +12,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 
 import { Book } from './book';
 import { BookService } from './book.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-books',
@@ -46,7 +47,9 @@ export class BooksComponent implements OnInit {
 
   filterTextChanged: Subject<string> = new Subject<string>();
 
-  constructor(private bookService: BookService) {
+  constructor(
+    protected authService: AuthService,
+    private bookService: BookService) {
   }
 
   ngOnInit() {
@@ -66,7 +69,7 @@ export class BooksComponent implements OnInit {
   }
 
   loadData(query?: string) {
-    var pageEvent = new PageEvent();
+    let pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
     this.filterQuery = query;

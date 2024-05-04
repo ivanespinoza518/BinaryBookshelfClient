@@ -14,5 +14,19 @@
       <a mat-flat-button color="primary" [routerLink]="['/categories']">
         Categories
       </a>
+
+      <span class="separator"></span>
+      
+      @if (!isLoggedIn) {
+        <a mat-flat-button color="primary" [routerLink]="['/login']">
+          Login
+        </a>
+      }
+
+      @if (isLoggedIn) {
+        <a mat-flat-button color="primary" (click)="onLogout()">
+          Logout
+        </a>
+      }
     </mat-toolbar>
   </header>

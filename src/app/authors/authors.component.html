@@ -4,10 +4,12 @@
     <p><em>Loading...</em></p>
 }
 
-<button mat-flat-button color="primary"
-    class="btn-add" [routerLink]="['/author']">
-    Add a new Author
-</button>
+@if (authors && authService.isAuthenticated()) {
+    <button mat-flat-button color="primary"
+        class="btn-add" [routerLink]="['/author']">
+        Add a new Author
+    </button>
+}
 
 <mat-form-field [hidden]="!authors">
     <input matInput #filter (keyup)="onFilterTextChanged(filter.value)"

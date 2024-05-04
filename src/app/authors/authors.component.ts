@@ -11,6 +11,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 
 import { Author } from './author';
 import { AuthorService } from './author.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-authors',
@@ -44,7 +45,9 @@ export class AuthorsComponent implements OnInit {
 
   filterTextChanged: Subject<string> = new Subject<string>();
 
-  constructor(private authorService: AuthorService) {
+  constructor(
+    protected authService: AuthService,
+    private authorService: AuthorService) {
   }
 
   ngOnInit() {
@@ -64,7 +67,7 @@ export class AuthorsComponent implements OnInit {
   }
 
   loadData(query?: string) {
-    var pageEvent = new PageEvent();
+    let pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
     this.filterQuery = query;

@@ -86,7 +86,7 @@ export class BookEditComponent extends BaseFormComponent implements OnInit {
     this.loadResources<Category>("Categories", "label");
 
     // retrieve the ID from the 'id' parameter
-    var idParam = this.activatedRoute.snapshot.paramMap.get('id');
+    const idParam = this.activatedRoute.snapshot.paramMap.get('id');
     this.id = idParam ? +idParam : 0;
 
     if (this.id) { // EDIT MODE
@@ -129,7 +129,7 @@ export class BookEditComponent extends BaseFormComponent implements OnInit {
   }
 
   onSubmit() {
-    var book = (this.id) ? this.book : <Book>{};
+    let book = (this.id) ? this.book : <Book>{};
     if (book) { // EDIT MODE
       book.title = this.form.controls['title'].value;
       book.subtitle = this.form.controls['subtitle'].value;

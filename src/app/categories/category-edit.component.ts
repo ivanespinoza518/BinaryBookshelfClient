@@ -85,7 +85,7 @@ export class CategoryEditComponent extends BaseFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const category = (this.id) ? this.category : <Category>{};
+    let category = (this.id) ? this.category : <Category>{};
     if (category) {
       category.label = this.form.controls['label'].value;
       

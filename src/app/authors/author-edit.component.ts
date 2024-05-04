@@ -46,8 +46,8 @@ export class AuthorEditComponent extends BaseFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authorService: AuthorService) {
-      super();
-    }
+    super();
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -90,7 +90,7 @@ export class AuthorEditComponent extends BaseFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const author = (this.id) ? this.author : <Author>{};
+    let author = (this.id) ? this.author : <Author>{};
     if (author) {
       author.name = this.form.controls['name'].value;
       author.background = this.form.controls['background'].value;
