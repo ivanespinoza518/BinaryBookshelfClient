@@ -46,7 +46,9 @@
     <!-- Total Books Column -->
     <ng-container matColumnDef="totalBooks">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Number of Books</th>
-        <td mat-cell *matCellDef="let author"> {{author.totalBooks}} </td>
+        <td mat-cell *matCellDef="let author"> 
+            <a [routerLink] = "['/booksByAuthor', author.id]">{{author.totalBooks}}</a>
+        </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

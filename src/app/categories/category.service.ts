@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { Category } from './category';
 import { BaseService, ApiResult } from '../base.service';
+import { Book } from '../books/book';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,32 @@ export class CategoryService extends BaseService<Category> {
     }
 
     return this.http.get<ApiResult<Category>>(url, { params });
+  }
+
+  getBooksOfCategory(
+    id: number,
+    pageIndex: number, 
+    pageSize: number, 
+    sortColumn: string, 
+    sortOrder: string, 
+    filterColumn: string | null, 
+    filterQuery: string | null
+  ): Observable<ApiResult<Book>> {
+    const url = this.getUrl(`Categories/BooksOfCategory/${id}`);
+    let params = new HttpParams()
+      .set("id", id)
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("sortColumn", sortColumn)
+      .set("sortOrder", sortOrder);
+
+    if (filterColumn && filterQuery) {
+      params = params
+        .set("filterColumn", filterColumn)
+        .set("filterQuery", filterQuery);
+    }
+
+    return this.http.get<ApiResult<Book>>(url, { params });
   }
 
   override get(id: number): Observable<Category> {

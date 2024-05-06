@@ -8,6 +8,8 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CategoryEditComponent } from './categories/category-edit.component';
 import { LoginComponent } from './auth/login.component';
 import { AuthGuard } from './auth/auth.guard';
+import { BooksByAuthorComponent } from './authors/books-by-author.component';
+import { BooksOfCategoryComponent } from './categories/books-of-category.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch : 'full' },
@@ -17,8 +19,10 @@ export const routes: Routes = [
     { path: 'authors', component: AuthorsComponent },
     { path: 'author/:id', component: AuthorEditComponent, canActivate: [AuthGuard] },
     { path: 'author', component: AuthorEditComponent, canActivate: [AuthGuard] },
+    { path: 'booksByAuthor/:id', component: BooksByAuthorComponent, canActivate: [AuthGuard] },
     { path: 'categories', component: CategoriesComponent },
     { path: 'category/:id', component: CategoryEditComponent, canActivate: [AuthGuard] },
     { path: 'category', component: CategoryEditComponent, canActivate: [AuthGuard] },
+    { path: 'booksOfCategory/:id', component: BooksOfCategoryComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent }
 ];
